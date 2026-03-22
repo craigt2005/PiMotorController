@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        .testbtn {
+        background-color:darkslategrey;
+        color: white;
+        font-size: 15px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        height:40px;
+        width:200px;
+        }
+
+        .testbtn:hover {
+        background-color: #059862;
+        }
+
+        td {
+        padding-left: 20px;
+        }
+        </style>
+    </head>
+
+
+    <body style="font-family: Arial, sans-serif; margin: 20px; background-color: #333333; color: white;">
+    
+    <h1>Motor Controller</h1>
+
+    
+    <fieldset>
+        <legend>Motor 1</legend>
+        <form action="/Motor1" method="GET">
+            <button type="submit" name="command" value="RunFwd">Run FWD</button>
+            <button type="submit" name="command" value="Stop">Stop</button>
+            <button type="submit" name="command" value="RunRev">Run REV</button>
+        </form>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Motor 2</legend>
+        <form action="/Motor2" method="GET">
+            <button type="submit" name="command" value="RunFwd">Run FWD</button>
+            <button type="submit" name="command" value="Stop">Stop</button>
+            <button type="submit" name="command" value="RunRev">Run REV</button>
+        </form>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Speed</legend>
+        <form action="/setSpeed" method="GET">
+            <label>FX Speed: <input type="range" name="r" min="0" max="255" value="25"></label><br>
+            <button type="submit">Set Speed</button>
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Network</legend>
+        <table>
+        <tr>
+            <td>IP</td>
+            <td><input value="#IP#"></input></td>
+        </tr>
+        <tr>
+            <td>Subnet Mask</td>
+            <td><input value="#SUBNET#"/></td>
+        </tr>
+         <tr>
+            <td>Default Gateway Mask</td>
+            <td><input value="#GATEWAY#"/></td>
+        </tr>
+        <tr>
+            <td>DNS</td>
+            <td><input value="#DNS#"/></td>
+        </tr>
+        
+        </table>
+    </fieldset>
+</body>
+</html>
