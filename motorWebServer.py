@@ -116,10 +116,10 @@ class MotorWebServer:
                 if 'command' in params:
                     if params['command'] == 'RunFwd':
                         print('Motor 1 - Fwd')
-                        self.motorController.set_motor1speed(10)
+                        self.motorController.set_motor1speed(40000)
                     if params['command'] == 'RunRev':
                         print('Motor 1 - Rev')
-                        self.motorController.set_motor1speed(-10)
+                        self.motorController.set_motor1speed(-40000)
                     if params['command'] == 'Stop':
                         print('Motor 1 - Stop')
                         self.motorController.set_motor1speed(0)
@@ -130,10 +130,10 @@ class MotorWebServer:
                 if 'command' in params:
                     if params['command'] == 'RunFwd':
                         print('Motor 2 - Fwd')
-                        self.motorController.set_motor2speed(10)
+                        self.motorController.set_motor2speed(40000)
                     if params['command'] == 'RunRev':
                         print('Motor 2 - Rev')
-                        self.motorController.set_motor2speed(-10)
+                        self.motorController.set_motor2speed(-40000)
                     if params['command'] == 'Stop':
                         print('Motor 2 - Stop')
                         self.motorController.set_motor2speed(0)
