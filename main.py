@@ -2,6 +2,8 @@ from screenMotor import Screen
 from time import sleep
 from motorController import MotorController
 from motorWebServer import MotorWebServer
+from artnet_client import ArtnetClient
+import _thread
 
 import network
 
@@ -14,9 +16,11 @@ print(ssid)
 print(password)
 
 
+
+
 #Configure the screen service
 Screen = Screen()
-Screen.setMode("Test")
+
 
 #Configure the wifi
 #we have to do this to clear the settings out of the wifi chip
@@ -49,6 +53,8 @@ while True:
         break
 
 myMotorController = MotorController(Screen)
+
+t1 = _thread.start_new_thread(ArtnetClient.udp_listen, ("192.168.68.55",myMotorController))
 
 myMotorWebServer = MotorWebServer(wlan, myMotorController)
 myMotorWebServer.webServerTask()

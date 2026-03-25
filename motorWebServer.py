@@ -4,9 +4,9 @@ from motorController import MotorController
 #some bollocks
 
 class MotorWebServer:
-    def __init__(self, wlan, tape_controller: TapeController):
+    def __init__(self, wlan, motorController: MotorController):
         self.wlan = wlan  
-        self.tape_controller = tape_controller  
+        self.motorController = motorController  
         print("WebServer V6")
 
 
@@ -65,10 +65,7 @@ class MotorWebServer:
         return r, g, b
 
     def webServerTask(self):
-        global mode
-        global Colour1
-        global Colour2
-        
+               
         addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
         s = socket.socket()
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -114,21 +111,34 @@ class MotorWebServer:
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")
                 #cl.close()
                 #continue
-
-
-            elif path == '/setmode':
-                if 'mode' in params:
-                    self.tape_controller.set_mode(params['mode'])
-                    print('Mode set to:', params['mode'])
-                    cl.send("HTTP/1.1 204 No Content\r\n\r\n")
             
             elif path == '/Motor1':
                 if 'command' in params:
                     if params['command'] == 'RunFwd':
                         print('Motor 1 - Fwd')
+                        self.motorController.set_motor1speed(10)
+                    if params['command'] == 'RunRev':
+                        print('Motor 1 - Rev')
+                        self.motorController.set_motor1speed(-10)
+                    if params['command'] == 'Stop':
+                        print('Motor 1 - Stop')
+                        self.motorController.set_motor1speed(0)
                         
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")    
            
+            elif path == '/Motor2':
+                if 'command' in params:
+                    if params['command'] == 'RunFwd':
+                        print('Motor 2 - Fwd')
+                        self.motorController.set_motor2speed(10)
+                    if params['command'] == 'RunRev':
+                        print('Motor 2 - Rev')
+                        self.motorController.set_motor2speed(-10)
+                    if params['command'] == 'Stop':
+                        print('Motor 2 - Stop')
+                        self.motorController.set_motor2speed(0)
+                        
+                cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
             
             elif path == '/stop':
                 if 'color' in params:

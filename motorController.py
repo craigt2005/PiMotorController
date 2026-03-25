@@ -8,19 +8,12 @@ class MotorController:
         self.screen = Screen
         pass
 
-    def set_mode(self, mode):
-        self.mode = mode
-        self.screen.setMode(mode)
-        print("Tape mode set to:", mode)
-        # Set the LED tape to the specified mode
+    def set_motor1speed(self, spd):
+        # Set the speed of M1
+        self.screen.setMotor1Speed(str(spd))
         pass
 
-    def set_motor1speed(self, color):
-        # Set the first color for the LED tape
-        self.screen.setColor1(color)
-        pass
-
-    def set_motor2speed(self, color):
-        # Set the second color for the LED tape
-        self.screen.setColor2(color)
+    def set_motor2speed(self, spd):
+        # Set the speed of M2
+        self.screen.setMotor2Speed(str(spd))
         pass
