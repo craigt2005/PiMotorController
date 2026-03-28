@@ -36,6 +36,7 @@
             <button type="submit" name="command" value="RunFwd">Run FWD</button>
             <button type="submit" name="command" value="Stop">Stop</button>
             <button type="submit" name="command" value="RunRev">Run REV</button>
+            <label>FX Speed: <input type="range" name="r" min="0" max="128" value="128"></label>
         </form>
     </fieldset>
     
@@ -45,16 +46,23 @@
             <button type="submit" name="command" value="RunFwd">Run FWD</button>
             <button type="submit" name="command" value="Stop">Stop</button>
             <button type="submit" name="command" value="RunRev">Run REV</button>
+            <label>FX Speed: <input type="range" name="r" min="0" max="128" value="128"></label>
         </form>
     </fieldset>
     
     <fieldset>
-        <legend>Speed</legend>
-        <form action="/setSpeed" method="GET">
-            <label>FX Speed: <input type="range" name="r" min="0" max="255" value="25"></label><br>
-            <button type="submit">Set Speed</button>
+        <legend>Common Motor Parameters</legend>
+        <form action="/PWM" method="GET">
+            <table>
+                <tr>
+                    <td>PWM Frequency</td>
+                    <td><input value="#FREQ#" type="text" name="text"/></td>
+                    <td><button type="submit" name="command" value="setPWM">Set</button></td>
+                </tr>
+            </table>
         </form>
     </fieldset>
+    
     <fieldset>
         <legend>Network</legend>
         <table>

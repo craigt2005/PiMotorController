@@ -2,11 +2,15 @@ from machine import Pin, PWM
 import utime
 
 class Motor:
-    def __init__(self, ena, in1, in2):
+    def __init__(self, ena, in1, in2, freq):
         self.in1 = Pin(in1, Pin.OUT)
         self.in2 = Pin(in2, Pin.OUT)
         self.speed_pin = PWM(Pin(ena))
-        self.speed_pin.freq(1000) # Set PWM frequency to 1kHz
+        self.speed_pin.freq(freq) # Set PWM frequency to 1kHz
+
+    def setFreq(self, freq):
+        self.stop()
+        self.speed_pin.freq(freq)
 
     def drive(self, speed):
         # Speed should be between -65535 and 65535

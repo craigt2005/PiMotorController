@@ -24,6 +24,8 @@ class MotorWebServer:
                 body = body.replace("#SUBNET#",config[1])
                 body = body.replace("#GATEWAY#",config[2])
                 body = body.replace("#DNS#",config[3])
+
+                body = body.replace("#FREQ#",str(self.motorController.freq))
                 
                 return body.encode("utf-8")
         except Exception as err:
@@ -140,6 +142,13 @@ class MotorWebServer:
                         
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
             
+            elif path == '/PWM':
+                if 'command' in params:
+                    if params['command'] == 'setPWM':
+                        print('PWM set to ' + params['text'])
+                cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
+
+
             elif path == '/stop':
                 if 'color' in params:
                     print('Stopping')
