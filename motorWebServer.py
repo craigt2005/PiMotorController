@@ -118,13 +118,17 @@ class MotorWebServer:
                 if 'command' in params:
                     if params['command'] == 'RunFwd':
                         print('Motor 1 - Fwd')
-                        self.motorController.set_motor1speed(40000)
+                        self.motorController.fwd_motor1()
                     if params['command'] == 'RunRev':
                         print('Motor 1 - Rev')
-                        self.motorController.set_motor1speed(-40000)
+                        self.motorController.rev_motor1()
                     if params['command'] == 'Stop':
                         print('Motor 1 - Stop')
-                        self.motorController.set_motor1speed(0)
+                        self.motorController.stop_motor1()
+                if 'rpm' in params:
+                    rpm = int(params['rpm'])
+                    self.motorController.set_motor1speed(rpm)
+                        
                         
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")    
            
@@ -132,20 +136,23 @@ class MotorWebServer:
                 if 'command' in params:
                     if params['command'] == 'RunFwd':
                         print('Motor 2 - Fwd')
-                        self.motorController.set_motor2speed(40000)
+                        self.motorController.fwd_motor2()
                     if params['command'] == 'RunRev':
                         print('Motor 2 - Rev')
-                        self.motorController.set_motor2speed(-40000)
+                        self.motorController.rev_motor2()
                     if params['command'] == 'Stop':
                         print('Motor 2 - Stop')
-                        self.motorController.set_motor2speed(0)
+                        self.motorController.stop_motor2()
                         
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
             
             elif path == '/PWM':
                 if 'command' in params:
                     if params['command'] == 'setPWM':
-                        print('PWM set to ' + params['text'])
+                        
+                        freq = int(params['freq'])
+                        print('PWM set to ' + str(freq))
+                        self.motorController.set_motorPWM(freq)
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
 
 

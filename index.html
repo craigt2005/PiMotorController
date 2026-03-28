@@ -36,7 +36,7 @@
             <button type="submit" name="command" value="RunFwd">Run FWD</button>
             <button type="submit" name="command" value="Stop">Stop</button>
             <button type="submit" name="command" value="RunRev">Run REV</button>
-            <label>FX Speed: <input type="range" name="r" min="0" max="128" value="128"></label>
+            <label>FX Speed: <input type="range" name="rpm" min="0" max="128" value="128" onchange="this.form.submit()"></label>
         </form>
     </fieldset>
     
@@ -46,7 +46,7 @@
             <button type="submit" name="command" value="RunFwd">Run FWD</button>
             <button type="submit" name="command" value="Stop">Stop</button>
             <button type="submit" name="command" value="RunRev">Run REV</button>
-            <label>FX Speed: <input type="range" name="r" min="0" max="128" value="128"></label>
+            <label>FX Speed: <input type="range" name="rpm" min="0" max="128" value="128" onchange="this.form.submit()"></label>
         </form>
     </fieldset>
     
@@ -56,7 +56,7 @@
             <table>
                 <tr>
                     <td>PWM Frequency</td>
-                    <td><input value="#FREQ#" type="text" name="text"/></td>
+                    <td><input value="500" type="text" name="freq"/></td>
                     <td><button type="submit" name="command" value="setPWM">Set</button></td>
                 </tr>
             </table>
