@@ -4,16 +4,27 @@ from motorController import MotorController
 from motorWebServer import MotorWebServer
 from artnet_client import ArtnetClient
 import _thread
+from settings import Settings
 
 import network
+import ujson
+
+
+settings = Settings()
+
+if not settings.load():
+    print("No settings file, using defaults")
+    settings.save()
+
 
 #Wifi
-ssid = 'No More Mr WiFi'
-password = '6BorderWay'
+
 sleep(1) #1 second sleep for usb to respond
 print('Connecting to network...')
-print(ssid)
-print(password)
+print(settings.ssid)
+print(settings.password)
+
+
 
 
 
@@ -32,7 +43,7 @@ sleep(0.1)
 
 wlan.ifconfig(('192.168.68.55','255.255.255.0','192.168.68.1','192.168.68.1'))
 #wlan.ifconfig(('192.168.137.2','255.255.255.0','192.168.137.1','192.168.137.1'))
-wlan.connect(ssid, password)
+wlan.connect(settings.ssid, settings.password)
 
 status_meanings = {
     -3: "FAIL",
@@ -52,9 +63,9 @@ while True:
     if(wlan.isconnected()):
         break
 
-myMotorController = MotorController(Screen)
+myMotorController = MotorController(Screen,settings.freq)
 
 t1 = _thread.start_new_thread(ArtnetClient.udp_listen, ("192.168.68.55",myMotorController))
 
-myMotorWebServer = MotorWebServer(wlan, myMotorController)
+myMotorWebServer = MotorWebServer(wlan, myMotorController,settings)
 myMotorWebServer.webServerTask()

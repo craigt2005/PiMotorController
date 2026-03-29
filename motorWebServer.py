@@ -1,10 +1,13 @@
 import socket
 from motorController import MotorController
+import ujson
+
 
 #some bollocks
 
 class MotorWebServer:
-    def __init__(self, wlan, motorController: MotorController):
+    def __init__(self, wlan, motorController: MotorController, settings):
+        self.settings = settings
         self.wlan = wlan  
         self.motorController = motorController  
         print("WebServer V6")
@@ -25,7 +28,10 @@ class MotorWebServer:
                 body = body.replace("#GATEWAY#",config[2])
                 body = body.replace("#DNS#",config[3])
 
-                body = body.replace("#FREQ#",str(self.motorController.freq))
+                body = body.replace("#FREQ#",str(self.settings.freq))
+                body = body.replace("#UNI#",str(self.settings.universe))
+                body = body.replace("#ADDR#",str(self.settings.address))
+                body = body.replace("#CUR#",str(self.settings.current))
                 
                 return body.encode("utf-8")
         except Exception as err:
@@ -146,13 +152,31 @@ class MotorWebServer:
                         
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
             
-            elif path == '/PWM':
-                if 'command' in params:
-                    if params['command'] == 'setPWM':
+            elif path == '/SaveSettings':
+                #if 'command' in params:
+                #    if params['command'] == 'setPWM':
                         
-                        freq = int(params['freq'])
-                        print('PWM set to ' + str(freq))
-                        self.motorController.set_motorPWM(freq)
+                #pwm frequency
+                freq = int(params['freq'])
+                print('PWM set to ' + str(freq))
+                self.motorController.set_motorPWM(freq)
+                self.settings.freq = freq
+                self.settings.current = float(params['cur'])
+                
+                #artnet settings
+                self.settings.address = int(params['addr'])
+                self.settings.universe = int(params['uni'])
+                
+                #network
+                self.settings.ip = params['ip']
+                self.settings.subnet = params['subnet']
+                self.settings.gateway = params['gateway']
+                self.settings.dns = params['dns']
+      
+                #self.ssid = "No More Mr WiFi"
+                #self.password = "6BorderWay"
+            
+                self.settings.save()  
                 cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
 
 

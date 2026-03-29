@@ -50,40 +50,46 @@
         </form>
     </fieldset>
     
-    <fieldset>
-        <legend>Common Motor Parameters</legend>
-        <form action="/PWM" method="GET">
-            <table>
-                <tr>
-                    <td>PWM Frequency</td>
-                    <td><input value="500" type="text" name="freq"/></td>
-                    <td><button type="submit" name="command" value="setPWM">Set</button></td>
-                </tr>
-            </table>
-        </form>
-    </fieldset>
     
     <fieldset>
         <legend>Network</legend>
-        <table>
-        <tr>
-            <td>IP</td>
-            <td><input value="#IP#"></input></td>
-        </tr>
-        <tr>
-            <td>Subnet Mask</td>
-            <td><input value="#SUBNET#"/></td>
-        </tr>
-         <tr>
-            <td>Default Gateway Mask</td>
-            <td><input value="#GATEWAY#"/></td>
-        </tr>
-        <tr>
-            <td>DNS</td>
-            <td><input value="#DNS#"/></td>
-        </tr>
-        
-        </table>
+        <form action="/SaveSettings" method="GET">
+            <table>
+                <tr>
+                    <td>Artnet Universe</td>
+                    <td><input value="#UNI#" name="uni"></input></td>
+                </tr>
+                <tr>
+                    <td>Artnet DMX Address</td>
+                    <td><input value="#ADDR#" name="addr"></input></td>
+                </tr>
+                <tr>
+                    <td>PWM Frequency</td>
+                    <td><input value="#FREQ#" name="freq"></input></td>
+                </tr>
+                <tr>
+                    <td>Current Limit (A)</td>
+                    <td><input value="#CUR#" name="cur"></input></td>
+                </tr>
+                <tr>
+                    <td>IP</td>
+                    <td><input value="#IP#" name="ip"></input></td>
+                </tr>
+                <tr>
+                    <td>Subnet Mask</td>
+                    <td><input value="#SUBNET#" name="subnet"/></td>
+                </tr>
+                 <tr>
+                    <td>Default Gateway Mask</td>
+                    <td><input value="#GATEWAY#" name="gateway"/></td>
+                </tr>
+                <tr>
+                    <td>DNS</td>
+                    <td><input value="#DNS#" name="dns"/></td>
+                </tr>
+            </table>
+            <button type="submit">Save</button>
+        </form>
     </fieldset>
 </body>
 </html>

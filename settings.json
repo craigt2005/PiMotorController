@@ -1,0 +1,11 @@
+{
+  "universe": 1,
+  "address": 1,
+  "freq" : 1000,
+  "ssid" : "No More Mr WiFi",
+  "password" : "6BorderWay",
+  "ip" : "192.168.68.55",
+  "subnetMask" : "255.255.255.0",
+  "gateway" : "192.168.68.1",
+  "dns" : "192.168.1.1"             
+}
