@@ -33,7 +33,7 @@ class MotorController:
     def set_motor1speed(self, spd):
         # Set the speed of M1
         p1 = (spd / 128)
-        
+        #print(p1)
         if (not self.m1fwd):
             p1 = p1 *-1
         

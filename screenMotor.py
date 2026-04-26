@@ -3,7 +3,7 @@ from ssd1306 import SSD1306_I2C
 
 class Screen:
 
-    i2c=I2C(0,sda=Pin(4), scl=Pin(5), freq=400000)
+    i2c=I2C(1,sda=Pin(6), scl=Pin(7), freq=400000)
     oled = SSD1306_I2C(128, 64, i2c)
 
     status = ""
@@ -11,6 +11,8 @@ class Screen:
     ip = ""
     M1 = "NA"
     M2 = "NA"
+    c1 = 0
+    c2 = 0
 
 #some bollocks 2
     def __init__(self):       
@@ -50,6 +52,10 @@ class Screen:
         #self.oled.text('A',0,56,0)
         self.oled.show()
     
+    def DMXChannels(self, c1, c2):
+        self.c1 = c1
+        self.c2 = c2
+        self.render()
 
     def render(self):
         self.oled.fill(0)
@@ -76,5 +82,8 @@ class Screen:
         
         self.oled.text(self.M1,3,29)
         self.oled.text(self.M2,67,29)
+        
+        self.oled.text(str(self.c1),3,37)
+        self.oled.text(str(self.c2),67,37)
 
         self.oled.show()

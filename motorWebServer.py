@@ -81,117 +81,121 @@ class MotorWebServer:
         s.listen(1)
         print("Web server listening on http://%s:%d" % addr)
 
-        while True:
-            cl, addr = s.accept()
-            print('Client connected from', addr)
-            
-            
-            
-            request = cl.recv(1024).decode('utf-8')
-            print('Request:')
-            print(request)
+        try:
+            while True:
+                cl, addr = s.accept()
+                print('Client connected from', addr)
+                
+                
+                
+                request = cl.recv(1024).decode('utf-8')
+                print('Request:')
+                print(request)
 
-            # Parse HTTP request
-            
-            request_line = request.split('\r\n')[0]
-            
-            try:
-                method, path, _ = request_line.split()
-            except Exception as err:
-                print(err)
+                # Parse HTTP request
+                
+                request_line = request.split('\r\n')[0]
+                
+                try:
+                    method, path, _ = request_line.split()
+                except Exception as err:
+                    print(err)
+                    cl.close()
+                    continue
+
+                # Handle query parameters
+                if '?' in path:
+                    path, qs = path.split('?', 1)
+                    params = self.parse_query(qs)
+                else:
+                    params = {}
+
+                # Handle different paths
+                if path == '/':
+                    response = self.serve_file('index.html')
+                    cl.send('HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n')
+                    cl.send(response)
+                
+                elif path == "/favicon.ico":
+                    cl.send("HTTP/1.1 204 No Content\r\n\r\n")
+                    #cl.close()
+                    #continue
+                
+                elif path == '/Motor1':
+                    if 'command' in params:
+                        if params['command'] == 'RunFwd':
+                            print('Motor 1 - Fwd')
+                            self.motorController.fwd_motor1()
+                        if params['command'] == 'RunRev':
+                            print('Motor 1 - Rev')
+                            self.motorController.rev_motor1()
+                        if params['command'] == 'Stop':
+                            print('Motor 1 - Stop')
+                            self.motorController.stop_motor1()
+                    if 'rpm' in params:
+                        rpm = int(params['rpm'])
+                        self.motorController.set_motor1speed(rpm)
+                            
+                            
+                    cl.send("HTTP/1.1 204 No Content\r\n\r\n")    
+               
+                elif path == '/Motor2':
+                    if 'command' in params:
+                        if params['command'] == 'RunFwd':
+                            print('Motor 2 - Fwd')
+                            self.motorController.fwd_motor2()
+                        if params['command'] == 'RunRev':
+                            print('Motor 2 - Rev')
+                            self.motorController.rev_motor2()
+                        if params['command'] == 'Stop':
+                            print('Motor 2 - Stop')
+                            self.motorController.stop_motor2()
+                            
+                    cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
+                
+                elif path == '/SaveSettings':
+                    #if 'command' in params:
+                    #    if params['command'] == 'setPWM':
+                            
+                    #pwm frequency
+                    freq = int(params['freq'])
+                    print('PWM set to ' + str(freq))
+                    self.motorController.set_motorPWM(freq)
+                    self.settings.freq = freq
+                    self.settings.current = float(params['cur'])
+                    
+                    #artnet settings
+                    self.settings.address = int(params['addr'])
+                    self.settings.universe = int(params['uni'])
+                    
+                    #network
+                    self.settings.ip = params['ip']
+                    self.settings.subnet = params['subnet']
+                    self.settings.gateway = params['gateway']
+                    self.settings.dns = params['dns']
+          
+                    #self.ssid = "No More Mr WiFi"
+                    #self.password = "6BorderWay"
+                
+                    self.settings.save()  
+                    cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
+
+
+                elif path == '/stop':
+                    if 'color' in params:
+                        print('Stopping')
+                        cl.send('HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\n\r\nColour2 set to ' + str(Colour2))
+                        break
+                
+
+
+
+                else:
+                    response = b"404 Not Found"
+                    cl.send('HTTP/1.0 404 Not Found\r\nContent-Type: text/plain\r\n\r\n')
+                    cl.send(response)
+
                 cl.close()
-                continue
-
-            # Handle query parameters
-            if '?' in path:
-                path, qs = path.split('?', 1)
-                params = self.parse_query(qs)
-            else:
-                params = {}
-
-            # Handle different paths
-            if path == '/':
-                response = self.serve_file('index.html')
-                cl.send('HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n')
-                cl.send(response)
             
-            elif path == "/favicon.ico":
-                cl.send("HTTP/1.1 204 No Content\r\n\r\n")
-                #cl.close()
-                #continue
-            
-            elif path == '/Motor1':
-                if 'command' in params:
-                    if params['command'] == 'RunFwd':
-                        print('Motor 1 - Fwd')
-                        self.motorController.fwd_motor1()
-                    if params['command'] == 'RunRev':
-                        print('Motor 1 - Rev')
-                        self.motorController.rev_motor1()
-                    if params['command'] == 'Stop':
-                        print('Motor 1 - Stop')
-                        self.motorController.stop_motor1()
-                if 'rpm' in params:
-                    rpm = int(params['rpm'])
-                    self.motorController.set_motor1speed(rpm)
-                        
-                        
-                cl.send("HTTP/1.1 204 No Content\r\n\r\n")    
-           
-            elif path == '/Motor2':
-                if 'command' in params:
-                    if params['command'] == 'RunFwd':
-                        print('Motor 2 - Fwd')
-                        self.motorController.fwd_motor2()
-                    if params['command'] == 'RunRev':
-                        print('Motor 2 - Rev')
-                        self.motorController.rev_motor2()
-                    if params['command'] == 'Stop':
-                        print('Motor 2 - Stop')
-                        self.motorController.stop_motor2()
-                        
-                cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
-            
-            elif path == '/SaveSettings':
-                #if 'command' in params:
-                #    if params['command'] == 'setPWM':
-                        
-                #pwm frequency
-                freq = int(params['freq'])
-                print('PWM set to ' + str(freq))
-                self.motorController.set_motorPWM(freq)
-                self.settings.freq = freq
-                self.settings.current = float(params['cur'])
-                
-                #artnet settings
-                self.settings.address = int(params['addr'])
-                self.settings.universe = int(params['uni'])
-                
-                #network
-                self.settings.ip = params['ip']
-                self.settings.subnet = params['subnet']
-                self.settings.gateway = params['gateway']
-                self.settings.dns = params['dns']
-      
-                #self.ssid = "No More Mr WiFi"
-                #self.password = "6BorderWay"
-            
-                self.settings.save()  
-                cl.send("HTTP/1.1 204 No Content\r\n\r\n")  
-
-
-            elif path == '/stop':
-                if 'color' in params:
-                    print('Stopping')
-                    cl.send('HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\n\r\nColour2 set to ' + str(Colour2))
-                    break
-            
-
-
-
-            else:
-                response = b"404 Not Found"
-                cl.send('HTTP/1.0 404 Not Found\r\nContent-Type: text/plain\r\n\r\n')
-                cl.send(response)
-
-            cl.close()
+        except Exception as e:
+            print(e)

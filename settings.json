@@ -2,10 +2,11 @@
   "universe": 1,
   "address": 1,
   "freq" : 1000,
-  "ssid" : "No More Mr WiFi",
-  "password" : "6BorderWay",
-  "ip" : "192.168.68.55",
-  "subnetMask" : "255.255.255.0",
-  "gateway" : "192.168.68.1",
-  "dns" : "192.168.1.1"             
+  "ssid" : "Artnet",
+  "password" : "Cham2026!",
+  "ip" : "2.0.0.20",
+  "subnetMask" : "255.0.0.0",
+  "gateway" : "2.0.0.1",
+  "dns" : "2.0.0.1",
+  "controllerip" : "2.0.0.10"
 }

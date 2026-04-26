@@ -15,6 +15,7 @@ class Settings:
         self.subnet = "255.255.255.0"
         self.gateway = "192.168.68.1"
         self.dns = "192.168.68.1"
+        self.controllerip = "2.0.0.10"
 
     def load(self):
         try:
@@ -31,6 +32,7 @@ class Settings:
             self.subnet = data.get("subnet",self.subnet)
             self.gateway = data.get("gateway",self.gateway)
             self.dns = data.get("dns",self.dns)
+            self.controllerip = data.get("controllerip", self.controllerip)
             
             return True
         except OSError:
@@ -47,7 +49,8 @@ class Settings:
             "ip" : self.ip,
             "subnet" : self.subnet,
             "gateway" : self.gateway,
-            "dns" : self.dns
+            "dns" : self.dns,
+            "controllerip" : slef.controllerip
             }
         
         with open(self.FILE, "w") as f:
