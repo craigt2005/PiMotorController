@@ -2,11 +2,5 @@
   "universe": 1,
   "address": 1,
   "freq" : 1000,
-  "ssid" : "Artnet",
-  "password" : "Cham2026!",
-  "ip" : "2.0.0.20",
-  "subnetMask" : "255.0.0.0",
-  "gateway" : "2.0.0.1",
-  "dns" : "2.0.0.1",
-  "controllerip" : "2.0.0.10"
+  "current" : 10
 }

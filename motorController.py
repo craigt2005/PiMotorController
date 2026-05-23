@@ -5,7 +5,7 @@ class MotorController:
     
        
         
-    def __init__(self, Screen, PwmFreq):  
+    def __init__(self, PwmFreq):  
         
         self.freq=PwmFreq        
         self.motor1 = Motor(15,14,13,self.freq)
@@ -22,7 +22,7 @@ class MotorController:
         self.m1fwd = True
         self.m2fwd = True
         
-        self.screen = Screen
+        #self.screen = Screen
         pass
 
 
@@ -41,7 +41,7 @@ class MotorController:
         
         
         
-        self.screen.setMotor1Speed(str(p1))
+        #self.screen.setMotor1Speed(str(p1))
         if (self.m1run):
             self.motor1.drive(self.m1rpm)
         pass
@@ -58,7 +58,7 @@ class MotorController:
         
         
         
-        self.screen.setMotor2Speed(str(p2))
+        #self.screen.setMotor2Speed(str(p2))
         if (self.m2run):
             self.motor2.drive(self.m1rpm)
         pass
