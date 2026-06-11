@@ -1,3 +1,0 @@
-[submodule "external/ArtnetListener"]
-	path = external/ArtnetListener
-	url = https://github.com/craigt2005/ArtnetListener.git
